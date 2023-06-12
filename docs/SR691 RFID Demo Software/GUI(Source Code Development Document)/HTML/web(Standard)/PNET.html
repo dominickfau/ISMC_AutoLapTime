@@ -1,0 +1,72 @@
+﻿
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <font size="5" color=#FF0000 height="20px" width="200px">只适合IE浏览器,其他浏览器可能不能用</font>
+    <title>NET 演示程序</title>
+    <script language='javascript' type='text/javascript' src='pjsnet.js'> </script>
+</head>
+
+<body>
+    <object id="ADActiveXPNet" style="visibility: hidden"
+            classid="clsid:A5A8D8EA-6C5F-4394-8695-7BC38D2AA51F" codebase="../ADActiveX/ADActiveX.exe"
+            width="0"
+            height="0"></object>
+    <div>
+        <div id="serialcomm">
+            <br />
+            <font size="3" height="20px" width="200px">Host(主机地址):</font>
+            <input id="host" type="text" value="192.168.2.116" style="width: 140px; text-align: center; font-family: 宋体, Arial, Helvetica, sans-serif; font-size: medium;" />
+            <font size="3" height="20px" width="200px">Port(主机端口):</font>
+            <input id="port" type="text" value="49152" style="width: 70px; text-align: center; font-family: 宋体, Arial, Helvetica, sans-serif; font-size: medium;" />
+            <br />
+        </div>
+        <div id="button">
+            <br />
+            <input id="rConnect" type="button" onclick="javascript: connect()" value="Connect" style="width: 120px; height: 35px; font-family: 宋体, Arial, Helvetica, sans-serif; font-size: medium; text-align: center;" />
+            <input id="rDisConnect" type="button" onclick="javascript: disconnect()" value="DisConnect" style="width: 120px; height: 35px; font-family: 宋体, Arial, Helvetica, sans-serif; font-size: medium; text-align: center;" disabled="disabled" />
+            <input id="rInformation" type="button" onclick="javascript: information()" value="Information" style="width: 120px; height: 35px; font-family: 宋体, Arial, Helvetica, sans-serif; font-size: medium; text-align: center;" disabled="disabled" />
+            <br />
+            <br />
+            <input id="rInit" type="button" onclick="javascript: init()" value="Init" style="width: 120px; height: 35px; font-family: 宋体, Arial, Helvetica, sans-serif; font-size: medium; text-align: center;" disabled="disabled" />
+            <input id="rIdentify" type="button" onclick="javascript: identify6c()" value="Identify6C" style="width: 120px; height: 35px; font-family: 宋体, Arial, Helvetica, sans-serif; font-size: medium; text-align: center;" disabled="disabled" />
+            <input id="rRead" type="button" onclick="javascript: read6c()" value="Read6C" style="width: 120px; height: 35px; font-family: 宋体, Arial, Helvetica, sans-serif; font-size: medium; text-align: center;" disabled="disabled" />
+            <input id="rWrite" type="button" onclick="javascript: write6c()" value="Write6C" style="width: 120px; height: 35px; font-family: 宋体, Arial, Helvetica, sans-serif; font-size: medium; text-align: center;" disabled="disabled" />
+            <br />
+        </div>
+        <br />
+        <font size="3" height="20px" width="200px">Block(块地址):</font>
+        <select id="rmb" name="T1" style="width: 80px; text-align: center; font-family: 宋体, Arial, Helvetica, sans-serif; font-size: medium;">
+            <option>RFU</option>
+            <option selected="selected">EPC</option>
+            <option>TID</option>
+            <option>USER</option>
+        </select>
+        <font size="3" height="20px" width="150px">Start(起始地址):</font>
+        <input id="rsa" type="text" value="2" style="width: 50px; text-align: center; font-family: 宋体, Arial, Helvetica, sans-serif; font-size: medium;" />
+        <font size="3" height="20px" width="150px">Length(数据长度):</font>
+        <input id="rdl" type="text" value="12" style="width: 50px; text-align: center; font-family: 宋体, Arial, Helvetica, sans-serif; font-size: medium;" />
+        <br />
+        <br />
+        <font size="3" height="20px" width="250px">Identify Data(16进制数据):</font>
+        <input id="rIdentifyData" type="text" value="12" style="width: 360px; text-align: center; font-family: 宋体, Arial, Helvetica, sans-serif; font-size: medium;" />
+        <br />
+        <br />
+        <font size="3" height="20px" width="250px">Read Data(16进制数据):</font>
+        <input id="rReadData" type="text" value="12" style="width: 360px; text-align: center; font-family: 宋体, Arial, Helvetica, sans-serif; font-size: medium;" />
+        <br />
+        <br />
+        <font size="3" height="20px" width="250px">Write Data(16进制数据):</font>
+        <input id="rWriteData" type="text" value="12" style="width: 360px; text-align: center; font-family: 宋体, Arial, Helvetica, sans-serif; font-size: medium;" />
+        <br />
+        <br />
+        <br />
+        <font size="3" height="20px" width="200px">State(状态):</font>
+        <textarea id="rResult" rows="100" style="font-family: 宋体, Arial, Helvetica, sans-serif; font-size: medium; width: 500px; height: 300px;" cols="20"></textarea>
+
+    </div>
+</body>
+</html>

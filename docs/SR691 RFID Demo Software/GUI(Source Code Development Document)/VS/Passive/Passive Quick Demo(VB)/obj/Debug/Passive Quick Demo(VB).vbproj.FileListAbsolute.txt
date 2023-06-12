@@ -1,0 +1,18 @@
+E:\VS2012\ApplicationSolution\Reader\RFID\SDK\Passive\Passive Quick Demo(VB)\bin\Debug\Passive Quick Demo(VB).exe
+E:\VS2012\ApplicationSolution\Reader\RFID\SDK\Passive\Passive Quick Demo(VB)\bin\Debug\Passive Quick Demo(VB).pdb
+E:\VS2012\ApplicationSolution\Reader\RFID\SDK\Passive\Passive Quick Demo(VB)\bin\Debug\Passive Quick Demo(VB).xml
+E:\VS2012\ApplicationSolution\Reader\RFID\SDK\Passive\Passive Quick Demo(VB)\bin\Debug\ADActiveX.dll
+E:\VS2012\ApplicationSolution\Reader\RFID\SDK\Passive\Passive Quick Demo(VB)\bin\Debug\ADDevice.dll
+E:\VS2012\ApplicationSolution\Reader\RFID\SDK\Passive\Passive Quick Demo(VB)\bin\Debug\ADDeviceReader.dll
+E:\VS2012\ApplicationSolution\Reader\RFID\SDK\Passive\Passive Quick Demo(VB)\bin\Debug\ADActiveX.xml
+E:\VS2012\ApplicationSolution\Reader\RFID\SDK\Passive\Passive Quick Demo(VB)\bin\Debug\ADDevice.xml
+E:\VS2012\ApplicationSolution\Reader\RFID\SDK\Passive\Passive Quick Demo(VB)\bin\Debug\ADDeviceReader.xml
+E:\VS2012\ApplicationSolution\Reader\RFID\SDK\Passive\Passive Quick Demo(VB)\obj\Debug\Passive Quick Demo(VB).vbprojAssemblyReference.cache
+E:\VS2012\ApplicationSolution\Reader\RFID\SDK\Passive\Passive Quick Demo(VB)\obj\Debug\Passive_Quick_Demo_VB_.frmMain.resources
+E:\VS2012\ApplicationSolution\Reader\RFID\SDK\Passive\Passive Quick Demo(VB)\obj\Debug\Passive_Quick_Demo_VB_.Resources.resources
+E:\VS2012\ApplicationSolution\Reader\RFID\SDK\Passive\Passive Quick Demo(VB)\obj\Debug\Passive Quick Demo(VB).vbproj.GenerateResource.cache
+E:\VS2012\ApplicationSolution\Reader\RFID\SDK\Passive\Passive Quick Demo(VB)\obj\Debug\Passive Quick Demo(VB).vbproj.CoreCompileInputs.cache
+E:\VS2012\ApplicationSolution\Reader\RFID\SDK\Passive\Passive Quick Demo(VB)\obj\Debug\Passive Quick Demo(VB).vbproj.CopyComplete
+E:\VS2012\ApplicationSolution\Reader\RFID\SDK\Passive\Passive Quick Demo(VB)\obj\Debug\Passive Quick Demo(VB).exe
+E:\VS2012\ApplicationSolution\Reader\RFID\SDK\Passive\Passive Quick Demo(VB)\obj\Debug\Passive Quick Demo(VB).xml
+E:\VS2012\ApplicationSolution\Reader\RFID\SDK\Passive\Passive Quick Demo(VB)\obj\Debug\Passive Quick Demo(VB).pdb

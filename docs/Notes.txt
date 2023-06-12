@@ -1,0 +1,3 @@
+RFID lap timming: https://www.instructables.com/Use-Arduino-and-RS232-Shield-to-interface-Integrat/
+
+https://wiki.linksprite.com/index.php?title=Long_Range_UHF_RFID_reader_(1-6_meters)_(ISO18000-6C_EPC_G2)_RS232&oldid=4101

@@ -1,0 +1,4 @@
+pyserial
+psutil
+PyQt5
+sqlmodel
