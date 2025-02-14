@@ -1,26 +1,31 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
+from typing import List
 
 
 class CustomQTableWidget(QtWidgets.QTableWidget):
     column_visibility_changed = QtCore.pyqtSignal(int, bool)
     row_inserted = QtCore.pyqtSignal(int)
-    
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.header_context_menu = self.set_header_context_menu()
 
-        self.mouse_over_column = -1 # -1 means no column is currently being hovered over
+        self.mouse_over_column = (
+            -1
+        )  # -1 means no column is currently being hovered over
 
         self.setShowGrid(True)
         self.setAlternatingRowColors(True)
         self.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
         self.setSelectionBehavior(QtWidgets.QAbstractItemView.SelectRows)
         self.setSelectionMode(QtWidgets.QAbstractItemView.SingleSelection)
-        
+
         self.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
         self.customContextMenuRequested.connect(self.show_row_context_menu)
         self.horizontalHeader().setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
-        self.horizontalHeader().customContextMenuRequested.connect(self.show_header_context_menu)
+        self.horizontalHeader().customContextMenuRequested.connect(
+            self.show_header_context_menu
+        )
         self.horizontalHeader().setDefaultSectionSize(75)
         self.horizontalHeader().setSortIndicatorShown(True)
         self.horizontalHeader().sortIndicatorChanged.connect(self.sort)
@@ -28,12 +33,12 @@ class CustomQTableWidget(QtWidgets.QTableWidget):
         self.verticalHeader().setVisible(False)
         self.verticalHeader().setStretchLastSection(False)
         self.setWordWrap(False)
-        
+
         font = QtGui.QFont()
         font.setBold(True)
         self.horizontalHeader().setFont(font)
-    
-    def addRow(self, data: list[str]):
+
+    def addRow(self, data: List[str]):
         assert len(data) == self.columnCount()
 
         row_count = self.rowCount()
@@ -42,8 +47,8 @@ class CustomQTableWidget(QtWidgets.QTableWidget):
             item = QtWidgets.QTableWidgetItem(str(text))
             self.setItem(row_count, column, item)
         self.row_inserted.emit(row_count)
-    
-    def setTableHeaders(self, headers: list[str]):
+
+    def setTableHeaders(self, headers: List[str]):
         self.setColumnCount(len(headers))
         self.setHorizontalHeaderLabels(headers)
         self.header_context_menu = self.set_header_context_menu()
@@ -54,7 +59,7 @@ class CustomQTableWidget(QtWidgets.QTableWidget):
     def toggleColumn(self, checked):
         action = self.sender()
         header_text = action.text()
-        
+
         for column in range(self.columnCount()):
             header = self.horizontalHeaderItem(column)
             if header.text() != header_text:
@@ -63,7 +68,7 @@ class CustomQTableWidget(QtWidgets.QTableWidget):
             self.setColumnHidden(column, not checked)
             # emit a signal on the column visibility change
             self.column_visibility_changed.emit(column, checked)
-    
+
     def set_header_context_menu(self) -> QtWidgets.QMenu:
         menu = QtWidgets.QMenu()
 
@@ -83,17 +88,17 @@ class CustomQTableWidget(QtWidgets.QTableWidget):
         menu.addAction("Auto Resize This Column", self.resize_current_column)
         menu.addAction("Auto Resize All Columns", self.resize_all_columns)
         return menu
-    
+
     def show_header_context_menu(self, pos):
         header = self.horizontalHeader()
         self.mouse_over_column = header.logicalIndexAt(pos)
         point = header.mapToGlobal(pos)
         self.header_context_menu.exec_(point)
-    
+
     def resize_current_column(self):
         current_column = self.mouse_over_column
         self.resizeColumnToContents(current_column)
-    
+
     def resize_all_columns(self):
         for column in range(self.columnCount()):
             self.resizeColumnToContents(column)
@@ -126,20 +131,19 @@ class CustomQTableWidget(QtWidgets.QTableWidget):
 
 
 class SearchWidget(QtWidgets.QWidget):
-    def __init__(self, columns: list[str], database_class=None, parent=None):
+    def __init__(self, columns: List[str], database_class=None, parent=None):
         super().__init__(parent)
 
-        self.database_class = database_class # The associated database table
-        self.search_results = [] # The list of search results
+        self.database_class = database_class  # The associated database table
+        self.search_results = []  # The List of search results
         self.columns = columns
 
         self.pagination_record_limit = 100
         """Number of records to show per page"""
         self.pagination_start_record = 1
         """Record number to start at"""
-        self.pagination_records = [] # type: list[list[str]]
+        self.pagination_records = []  # type: List[List[str]]
         """List of all records to show"""
-
 
         self.setContentsMargins(0, 0, 0, 0)
         self.setObjectName("SearchWidget")
@@ -148,8 +152,8 @@ class SearchWidget(QtWidgets.QWidget):
         self.main_layout.setContentsMargins(0, 0, 0, 0)
         self.main_layout.setSpacing(0)
         self.main_layout.setObjectName("main_layout")
-        
-        self.search_data_form = QtWidgets.QFormLayout() # User specified data
+
+        self.search_data_form = QtWidgets.QFormLayout()  # User specified data
         self.search_data_form.setContentsMargins(0, 0, 0, 5)
         self.search_data_form.setSpacing(5)
         self.search_data_form.setObjectName("search_data_form")
@@ -189,7 +193,9 @@ class SearchWidget(QtWidgets.QWidget):
 
         self.view_button = QtWidgets.QPushButton("View")
         self.view_button.setEnabled(False)
-        self.results_table.itemSelectionChanged.connect(lambda: self.view_button.setEnabled(True))
+        self.results_table.itemSelectionChanged.connect(
+            lambda: self.view_button.setEnabled(True)
+        )
         self.view_button.setFixedSize(50, 25)
         self.view_button.setObjectName("view_button")
         self.view_button_layout.addStretch(1)
@@ -215,79 +221,102 @@ class SearchWidget(QtWidgets.QWidget):
         self.pagination_label.mouseDoubleClickEvent = self.pagination_label_double_click
         self.update_pagination_label()
         self.pagination_label.setObjectName("pagination_label")
-        self.pagination_layout.addWidget(self.previous_page_button, alignment=QtCore.Qt.AlignLeft)
-        self.pagination_layout.addWidget(self.pagination_label, alignment=QtCore.Qt.AlignCenter)
-        self.pagination_layout.addWidget(self.next_page_button, alignment=QtCore.Qt.AlignRight)
+        self.pagination_layout.addWidget(
+            self.previous_page_button, alignment=QtCore.Qt.AlignLeft
+        )
+        self.pagination_layout.addWidget(
+            self.pagination_label, alignment=QtCore.Qt.AlignCenter
+        )
+        self.pagination_layout.addWidget(
+            self.next_page_button, alignment=QtCore.Qt.AlignRight
+        )
         self.main_layout.addLayout(self.pagination_layout)
 
         self.setLayout(self.main_layout)
-    
+
     @staticmethod
     def clean_line_edit_text(line_edit: QtWidgets.QLineEdit) -> None:
         line_edit.setText(line_edit.text().strip())
-    
+
     def update_pagination(self) -> None:
         """Updates pagination"""
         self.previous_page_button.setEnabled(self.pagination_start_record > 1)
-        self.next_page_button.setEnabled(self.pagination_start_record + self.pagination_record_limit < len(self.pagination_records))
+        self.next_page_button.setEnabled(
+            self.pagination_start_record + self.pagination_record_limit
+            < len(self.pagination_records)
+        )
         self.update_pagination_label()
 
         # Update table
-        records = self.pagination_records[self.pagination_start_record - 1:self.pagination_start_record + self.pagination_record_limit - 1]
+        records = self.pagination_records[
+            self.pagination_start_record
+            - 1 : self.pagination_start_record
+            + self.pagination_record_limit
+            - 1
+        ]
         self.results_table.setRowCount(len(records))
         for row, record in enumerate(records):
             for col, value in enumerate(record):
                 self.results_table.setItem(row, col, QtWidgets.QTableWidgetItem(value))
-    
+
     def next_page(self) -> None:
         """Moves to the next page"""
         self.pagination_start_record += self.pagination_record_limit
         self.update_pagination()
-    
+
     def previous_page(self) -> None:
         """Moves to the previous page"""
         self.pagination_start_record -= self.pagination_record_limit
         self.update_pagination()
 
-    def add_record(self, data: list[str]):
+    def add_record(self, data: List[str]):
         self.results_table.insert_row_data(data)
         self.pagination_records.append(data)
         self.update_pagination()
-    
-    def set_record_data(self, data: list[list[str]]):
-        self.pagination_records = [] # type: list[list[str]]
+
+    def set_record_data(self, data: List[List[str]]):
+        self.pagination_records = []  # type: List[List[str]]
         for record in data:
             self.add_record(record)
-        self.results_table.horizontalHeader().resizeSections(QtWidgets.QHeaderView.ResizeToContents)
+        self.results_table.horizontalHeader().resizeSections(
+            QtWidgets.QHeaderView.ResizeToContents
+        )
 
     def update_pagination_label(self):
-        self.pagination_label.setText(f"Records {self.pagination_start_record} - {self.pagination_start_record + self.pagination_record_limit - 1} of {len(self.pagination_records)}")
-    
+        self.pagination_label.setText(
+            f"Records {self.pagination_start_record} - {self.pagination_start_record + self.pagination_record_limit - 1} of {len(self.pagination_records)}"
+        )
+
     def add_search_form_field(self, label: str, field: QtWidgets.QWidget):
         """Adds a search field to the search layout"""
         if isinstance(field, QtWidgets.QLineEdit):
             field.editingFinished.connect(lambda: self.clean_line_edit_text(field))
         self.search_data_form.addRow(QtWidgets.QLabel(label), field)
-    
-    def add_search_field(self, field: QtWidgets.QWidget, stretch: int=0, alignment: QtCore.Qt.Alignment=QtCore.Qt.AlignLeft):
+
+    def add_search_field(
+        self,
+        field: QtWidgets.QWidget,
+        stretch: int = 0,
+        alignment: QtCore.Qt.Alignment = QtCore.Qt.AlignLeft,
+    ):
         """Adds a search field to the vertical layout below the search form."""
         if isinstance(field, QtWidgets.QLineEdit):
             field.editingFinished.connect(lambda: self.clean_line_edit_text(field))
         self.search_data_vertical_layout.addWidget(field, stretch, alignment)
-    
+
     def change_pagination(self, value: int) -> None:
         self.pagination_record_limit = value
         self.update_pagination()
-    
+
     def pagination_label_double_click(self, event):
         super().mouseDoubleClickEvent(event)
-        
+
         # Open a dialog to change the number of records to show per page
         dialog = QtWidgets.QDialog()
         dialog.setWindowTitle("Change Pagination")
         dialog.setFixedSize(250, 60)
         dialog.setWindowModality(QtCore.Qt.ApplicationModal)
-        
+
         layout = QtWidgets.QVBoxLayout()
         layout.setContentsMargins(5, 5, 5, 5)
         layout.setSpacing(5)
@@ -337,7 +366,7 @@ class SearchWidget(QtWidgets.QWidget):
     #         self.search_results = global_session.query(self.database_class).all()
     #     else:
     #         self.search_results = global_session.query(self.database_class).all()
-        
+
     #     data = []
     #     for result in self.search_results:
     #         row = []
@@ -350,6 +379,7 @@ class SearchWidget(QtWidgets.QWidget):
 
 if __name__ == "__main__":
     import sys
+
     app = QtWidgets.QApplication(sys.argv)
     widget = QtWidgets.QWidget()
     layout = QtWidgets.QVBoxLayout()
@@ -365,7 +395,6 @@ if __name__ == "__main__":
     field_2.addItems(["a", "b", "c"])
     search_widget.add_search_field(QtWidgets.QLabel("Field 1"), field_1)
     search_widget.add_search_field(QtWidgets.QLabel("Field 2"), field_2)
-
 
     data = []
     for i in range(1000):
